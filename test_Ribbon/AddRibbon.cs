@@ -21,7 +21,7 @@ namespace test_Ribbon
                                String TabTitle, 
                                String PanelName, 
                                String buttonName,
-                                String Command)
+                               String Command)
         {
             //TabName="ACAD_DLL_Ribbon";
             //TabTitle = "ACAD_DLL";
@@ -29,6 +29,9 @@ namespace test_Ribbon
             //buttonName ="_button1";
             _command = Command;
 
+
+            bool tabAdd = false;
+            bool PanelAdd = false;
 
             Ed.Editor ed = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
 
@@ -38,6 +41,7 @@ namespace test_Ribbon
             if (rbTab == null)
             {
                 // создаем вкладку
+                tabAdd = true;
                 rbTab = new Win.RibbonTab();
                 rbTab.Title = TabTitle;
                 rbTab.Id = TabName;
@@ -50,7 +54,7 @@ namespace test_Ribbon
             {
                 // создаем контейнер для элементов
                 //Win.RibbonPanelSource rbPanelSource = new Win.RibbonPanelSource();
-
+                PanelAdd = true;
                 rbPanelSource.Title = PanelName;
                 rbPanelSource.Id = PanelName;
                 // добавляем в контейнер элементы управления
@@ -70,14 +74,31 @@ namespace test_Ribbon
                 // создаем кнопку
                 button1 = new Win.RibbonButton();
                 button1.Id = buttonName;
+                button1.Text = buttonName;
+                button1.ShowText = true;
+                button1.Orientation = System.Windows.Controls.Orientation.Vertical;
+                button1.Name = buttonName;
+                button1.Description = buttonName + "\nКомманда: " + _command;
+
                 // привязываем к кнопке обработчик нажатия
                 button1.CommandHandler = new CommandHandler_Button1();
 
                 rbPanelSource.Items.Add(button1);
-                // добавляем на вкладку панель
-                rbTab.Panels.Add(rbPanel);
+
+                if (PanelAdd)
+                {
+                    // добавляем на вкладку панель
+                    rbTab.Panels.Add(rbPanel);
+                }
+
+                
+                
+                if(tabAdd)
+                {
                 // добавляем на ленту вкладку
-                rbCtrl.Tabs.Add(rbTab);
+                    rbCtrl.Tabs.Add(rbTab);
+                }
+
                 // делаем созданную вкладку активной ("выбранной")
                 rbTab.IsActive = true;
             }
