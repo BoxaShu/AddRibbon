@@ -33,8 +33,8 @@ namespace test_Ribbon
         }
 
 
-        [Rtm.CommandMethod("bx_testRibbon")]
-        public void testRibbon()
+        [Rtm.CommandMethod("bx_testRibbon1")]
+        public void testRibbon1()
         {
             String TabName="ACAD_DLL_Ribbon";
             String TabTitle = "ACAD_DLL";
@@ -45,6 +45,39 @@ namespace test_Ribbon
             AddRibbons.AddRibbon(TabName, TabTitle, PanelName, buttonName, _command);
         }
 
+        [Rtm.CommandMethod("bx_testRibbon2")]
+        public void testRibbon2()
+        {
+            String TabName = "ACAD_DLL_Ribbon";
+            String TabTitle = "ACAD_DLL";
+            String PanelName = "Плиты";
+            String buttonName = "_button2";
+            String _command = "._circle 2,2,0 4 ";
+            ////acDoc.SendStringToExecute("._circle 2,2,0 4 ", true, false, false);
+            AddRibbons.AddRibbon(TabName, TabTitle, PanelName, buttonName, _command);
+        }
 
+        [Rtm.CommandMethod("bx_testRibbon3")]
+        public void testRibbon3()
+        {
+            String TabName = "ACAD_DLL_Ribbon";
+            String TabTitle = "ACAD_DLL";
+            String PanelName = "Плиты";
+            String buttonName = "_button3";
+            String _command = "._circle 2,2,0 4 ";
+            ////acDoc.SendStringToExecute("._circle 2,2,0 4 ", true, false, false);
+            AddRibbons.AddRibbon(TabName, TabTitle, PanelName, buttonName, _command);
+        }
+        [Rtm.CommandMethod("bx_testRibbon4")]
+        public void testRibbon4()
+        {
+            String TabName = "ACAD_DLL_Ribbon";
+            String TabTitle = "ACAD_DLL";
+            String PanelName = "Плиты";
+            String buttonName = "_button4";
+            String _command = "._circle 2,2,0 4 ";
+            ////acDoc.SendStringToExecute("._circle 2,2,0 4 ", true, false, false);
+            AddRibbons.AddRibbon(TabName, TabTitle, PanelName, buttonName, _command);
+        }
     }
 }

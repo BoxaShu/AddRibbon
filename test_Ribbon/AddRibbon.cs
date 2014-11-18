@@ -32,6 +32,8 @@ namespace test_Ribbon
 
             bool tabAdd = false;
             bool PanelAdd = false;
+            bool RowAdd = false;
+
 
             Ed.Editor ed = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
 
@@ -48,13 +50,15 @@ namespace test_Ribbon
             }
 
             Win.RibbonPanel rbPanel = rbTab.FindPanel(PanelName);
-            Win.RibbonPanelSource rbPanelSource = new Win.RibbonPanelSource();
-
+            Win.RibbonPanelSource rbPanelSource;
             if (rbPanel == null)
             {
                 // создаем контейнер для элементов
                 //Win.RibbonPanelSource rbPanelSource = new Win.RibbonPanelSource();
                 PanelAdd = true;
+                
+                rbPanelSource = new Win.RibbonPanelSource();
+
                 rbPanelSource.Title = PanelName;
                 rbPanelSource.Id = PanelName;
                 // добавляем в контейнер элементы управления
@@ -67,6 +71,25 @@ namespace test_Ribbon
                 // добавляем на панель контейнер для элементов
                 rbPanel.Source = rbPanelSource;
             }
+            else
+            {
+               rbPanelSource = rbPanel.Source;
+            }
+
+            Win.RibbonItem rbRowItem = rbPanelSource.FindItem(PanelName); //rbPanel.FindItem(PanelName,true);
+
+            Win.RibbonRowPanel rbRowPanel = (Win.RibbonRowPanel)rbPanel.FindItem(PanelName);
+            if (rbRowPanel == null)
+            {
+                RowAdd = true;
+                rbRowPanel = new Win.RibbonRowPanel();
+                rbRowPanel.Id = PanelName;
+                rbRowPanel.Name = PanelName;
+                rbRowPanel.Text = PanelName;
+                rbRowPanel.ShowText = true;
+
+            }
+
 
             Win.RibbonButton button1 = (Win.RibbonButton)rbPanel.FindItem(buttonName);
             if (button1 == null)
@@ -83,15 +106,32 @@ namespace test_Ribbon
                 // привязываем к кнопке обработчик нажатия
                 button1.CommandHandler = new CommandHandler_Button1();
 
-                rbPanelSource.Items.Add(button1);
+                //if (rbPanel.Source.Items.Count > 0 )
+                //{
+                //    foreach( Win.RibbonButton butn in  rbPanel.Source.Items)
+                //    {
+                //       rbPanelSource.Items.Add(butn);
+                //    }
+                //}
 
+               // rbPanelSource.Items.Add(button1);
+
+
+                // rbPanel.Source = rbPanelSource;
+                rbRowPanel.Items.Add(button1);
+
+                if (RowAdd)
+                {
+                    // добавляем на вкладку панель
+                    rbPanelSource.Items.Add(rbRowPanel);
+                }
+                
                 if (PanelAdd)
                 {
                     // добавляем на вкладку панель
                     rbTab.Panels.Add(rbPanel);
                 }
 
-                
                 
                 if(tabAdd)
                 {
